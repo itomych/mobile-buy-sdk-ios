@@ -242,6 +242,11 @@ static NSString * const BUYClientJSONMimeType = @"application/json";
 		request.HTTPBody = [NSJSONSerialization dataWithJSONObject:[object jsonDictionaryForCheckout] options:0 error:nil];
 	}
 	
+	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+	formatter.dateFormat = @"YYYY-MM-dd";
+	NSString *date = [formatter stringFromDate:[NSDate date]];
+	
+	[request addValue:date forHTTPHeaderField:@"X-Shopify-Checkout-Version"];
 	[request addValue:[self authorizationHeader] forHTTPHeaderField:@"Authorization"];
 	[request addValue:BUYClientJSONMimeType forHTTPHeaderField:@"Content-Type"];
 	[request addValue:BUYClientJSONMimeType forHTTPHeaderField:@"Accept"];
